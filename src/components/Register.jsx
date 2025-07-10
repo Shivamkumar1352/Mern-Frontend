@@ -1,19 +1,126 @@
-import React from 'react'
-
+import React, { useRef, useState } from "react";
+import axios from "axios";
+import "./Register.css";
 const Register = () => {
+  const [user, setUser] = useState({});
+  const [error, setError] = useState();
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    try {
+      // const url = "http://localhost:8080/api/users/register";
+      const url = "https://mern-backend-azure-sigma.vercel.app/api/users/register"
+      const response = axios.post(url,user);
+      console.log(response.data);
+      setError("data saved successfully");
+    } catch (err) {
+      console.log(err.response?.data || err);
+      setError("something went wrong");
+    }
+  }
+
   return (
-    <>
-    <h1>Registration Form</h1>
-    <form action="">
-       <p>fisrt name:<input type="text" name="firstName" id="firstName" /></p> 
-       <p>last name:<input type="text" name="firstName" id="firsName" /></p> 
-       <p>email:<input type="email" name="email" id="email" /></p>
-       <p>password:<input type="password" name="password" id="password" /></p>
-       <button>Register</button>
+    <div className="register-container">
+      <h1>Registration Form</h1>
+      {error}
+      <form className="register-form">
+        <p>
+          <input
+            type="text"
+            name="firstName"
+            id="firstName"
+            placeholder="Enter first name"
+            onChange={(e)=>setUser({...user,firstName: e.target.value})}
+          />
+        </p>
+        <p>
+          <input
+            type="text"
+            name="lastName"
+            id="lastName"
+            placeholder="Enter last name"
+            onChange={(e)=>setUser({...user,lastName: e.target.value})}
+          />
+        </p>
+        <p>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter email"
+            onChange={(e)=>setUser({...user,email: e.target.value})}
+          />
+        </p>
+        <p>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter password"
+            onChange={(e)=>setUser({...user,password:e.target.value})}
+          />
+        </p>
+        <button onClick={handleSubmit}>Register</button>
+      </form>
+    </div>
+  );
+};
 
-    </form>
-    </>
-  )
-}
+export default Register;
 
-export default Register
+
+// import React, { useRef} from "react";
+// import "./Register.css";
+// const Register = () => {
+//   const firstName = useRef()
+//   const lastName = useRef()
+//   const email = useRef()
+//   const password = useRef()
+//   const handleSubmit = ()=>{
+//     const user = {
+//       firstName: firstName.current.value,
+//       lastName: lastName.current.value,
+//       email: email.current.value
+
+//     }
+//     console.log(user);
+//   }
+
+//   return (
+//     <div className="register-container">
+//       <h1>Registration Form</h1>
+//       <form className="register-form">
+//         <p>
+//           <input
+//             type="text"
+//             placeholder="Enter first name"
+//             ref={firstName}
+//           />
+//         </p>
+//         <p>
+//           <input
+//             type="text"
+//             placeholder="Enter last name"
+//             ref={lastName}
+//           />
+//         </p>
+//         <p>
+//           <input
+//             type="email"
+//             placeholder="Enter email"
+//             ref={email}
+//           />
+//         </p>
+//         <p>
+//           <input
+//             type="password"
+//             placeholder="Enter password"
+//             ref={password}
+//           />
+//         </p>
+//         <button onClick={handleSubmit}>Register</button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Register;

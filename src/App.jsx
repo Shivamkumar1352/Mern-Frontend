@@ -7,10 +7,10 @@ import Register from "./components/Register.jsx";
 function App() {
   return (
     <div className="App-Container">
-      {/* <h1 style={{ backgroundColor: "antiquewhite" }}>MERN Frontend</h1> */}
+      <h1 style={{ backgroundColor: "antiquewhite" }}>MERN Frontend</h1>
       {/* <Home age={21}/> */}
       <Register/>
-      {/* <h3>This is footer</h3> */}
+      <h3>This is footer</h3>
     </div>
   );
 }
