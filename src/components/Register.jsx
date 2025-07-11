@@ -1,14 +1,15 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 const Register = () => {
   const [user, setUser] = useState({});
   const [error, setError] = useState();
+  const API_URL = import.meta.env.VITE_API_URL
   const handleSubmit = (e)=>{
     e.preventDefault();
     try {
-      // const url = "http://localhost:8080/api/users/register";
-      const url = "https://mern-backend-azure-sigma.vercel.app/api/users/register"
+      const url = `${API_URL}/api/users/register`;
       const response = axios.post(url,user);
       console.log(response.data);
       setError("data saved successfully");
@@ -61,6 +62,8 @@ const Register = () => {
         </p>
         <button onClick={handleSubmit}>Register</button>
       </form>
+      <hr />
+      <Link to="/login">Login here...</Link>
     </div>
   );
 };
