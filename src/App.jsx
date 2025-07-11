@@ -21,7 +21,7 @@ function App() {
         <nav>
         <Link to="/">Home</Link>-<Link to="/login">Login</Link>-
         <Link to="/register">Register</Link>-<Link to="/cart">My Cart</Link>-
-        <Link to="/order">Order</Link>
+        <Link to="/order">Order</Link>-<Link to="/admin">Admin</Link>
         </nav> 
         <Routes>
   <Route index element={<Product />} />
