@@ -1,18 +1,14 @@
-import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
-
-function Admin() {
+import React from "react";
+import { Outlet, Link } from "react-router-dom";
+export default function Admin() {
   return (
     <div>
-        <nav>
-        <Link to="users">Users</Link> -
-        <Link to="products">Products</Link> -
-        <Link to="orders">Orders</Link>
-      </nav>
-      <hr />
-      <Outlet />
+      <Link to="/admin">Users</Link>-
+      <Link to="/admin/products">Products</Link>-
+      <Link to="/admin/orders">Orders</Link>
+      <div>
+        <Outlet />
+      </div>
     </div>
-  )
+  );
 }
-
-export default Admin
