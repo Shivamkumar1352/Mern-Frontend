@@ -21,19 +21,21 @@ export default function Product() {
   }, []);
 
   const addToCart = (product) => {
-    product.qty = 1
-    setCart([...cart, product]);
-    console.log(cart)
+    const found = cart.find((item) => item._id === product._id);
+    if (!found) {
+      product.qty = 1;
+      setCart([...cart, product]);
+    }
   };
   return (
     <div>
       {products &&
         products.map((product) => (
           <div key={product._id}>
-            <img src={`${API_URL}/product.imgUrl`} />
+            <img src={product.imgUrl} width={100}/>
             <h3>{product.productName}</h3>
             <p>{product.description}</p>
-            <h4>{product.price}</h4>
+            <h4>₹{product.price}/-</h4>
             <button onClick={() => addToCart(product)}>Add to Cart</button>
           </div>
         ))}

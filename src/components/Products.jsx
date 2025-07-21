@@ -70,7 +70,7 @@ export default function Products() {
   };
 
   const handleEdit = (product) => {
-    setEditId(user._id);
+    setEditId(product._id);
     setForm({
       ...form,
       productName: product.productName,
@@ -140,7 +140,7 @@ export default function Products() {
             name="price"
             value={form.price}
             type="text"
-            placeholder="Price Address"
+            placeholder="Price"
             onChange={handleChange}
             required
           />
