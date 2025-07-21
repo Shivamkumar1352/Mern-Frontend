@@ -1,0 +1,101 @@
+.admin-order-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-order-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.admin-order-filter {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.admin-order-filter select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+}
+
+.admin-order-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-order-item {
+  background-color: #f9f9f9;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
+}
+
+.admin-order-item strong {
+  font-weight: 600;
+}
+
+.admin-order-buttons {
+  margin-top: 8px;
+}
+
+.admin-order-buttons button {
+  padding: 6px 12px;
+  margin-right: 10px;
+  font-size: 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.admin-order-buttons .complete-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.admin-order-buttons .cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.admin-order-buttons button:hover {
+  opacity: 0.9;
+}
+
+.admin-order-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  gap: 10px;
+}
+
+.admin-order-pagination button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: #e57300;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-order-pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

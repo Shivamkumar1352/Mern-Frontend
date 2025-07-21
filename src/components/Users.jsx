@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import './Users.css'
 import { useRef } from "react";
 import { useContext } from "react";
 import { AppContext } from "../App";
@@ -137,114 +138,66 @@ export default function Users() {
     });
   };
   return (
-    <div>
+     <div className="user-management">
       <h2>User Management</h2>
-      {error}
-      <div>
-        <form ref={frmRef}>
-          <input
-            name="firstName"
-            value={form.firstName}
-            type="text"
-            placeholder="First Name"
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="lastName"
-            value={form.lastName}
-            type="text"
-            placeholder="Last Name"
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="email"
-            value={form.email}
-            type="text"
-            placeholder="Email Address"
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="password"
-            value={form.password}
-            type="password"
-            placeholder="New Password"
-            onChange={handleChange}
-            required
-          />
-          <select
-            name="role"
-            value={form.role}
-            required
-            onChange={handleChange}
-          >
-            <option value="">--Select Role--</option>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-          {/* <input
-            name="role"
-            value={form.role}
-            type="text"
-            onChange={handleChange}
-            placeholder="Role"
-          /> */}
+      {error && <div className="error">{error}</div>}
 
-          {editId ? (
-            <>
-              <button onClick={handleUpdate}>Update</button>
-              <button onClick={handleCancel}>Cancel</button>
-            </>
-          ) : (
-            <button onClick={handleAdd}>Add</button>
-          )}
-        </form>
+      <form ref={frmRef}>
+        <input name="firstName" value={form.firstName} type="text" placeholder="First Name" onChange={handleChange} required />
+        <input name="lastName" value={form.lastName} type="text" placeholder="Last Name" onChange={handleChange} required />
+        <input name="email" value={form.email} type="text" placeholder="Email Address" onChange={handleChange} required />
+        <input name="password" value={form.password} type="password" placeholder="New Password" onChange={handleChange} required />
+        <select name="role" value={form.role} required onChange={handleChange}>
+          <option value="">--Select Role--</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        {editId ? (
+          <>
+            <button onClick={handleUpdate}>Update</button>
+            <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
+          </>
+        ) : (
+          <button onClick={handleAdd}>Add</button>
+        )}
+      </form>
+
+      <div className="search-bar">
+        <input type="text" placeholder="Search by name or email" onChange={(e) => setSearchVal(e.target.value)} />
+        <button onClick={fetchUsers}>Search</button>
       </div>
-      <div>
-        <input type="text" onChange={(e) => setSearchVal(e.target.value)} />
-        <button onClick={() => fetchUsers()}>Search</button>
-      </div>
-      <div>
-        <table border="1">
-          <thead>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email Address</th>
-              <th>Role</th>
-            </tr>
-          </thead>
+
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
           {users.map((value) => (
-            <tbody key={value._id}>
-              <tr>
-                <td>{value.firstName}</td>
-                <td>{value.lastName}</td>
-                <td>{value.email}</td>
-                <td>{value.role}</td>
-                <td>
-                  <button onClick={() => handleEdit(value)}>Edit</button>
-                  <button onClick={() => handleDelete(value._id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+            <tr key={value._id}>
+              <td>{value.firstName}</td>
+              <td>{value.lastName}</td>
+              <td>{value.email}</td>
+              <td>{value.role}</td>
+              <td>
+                <button style={{ marginRight: '10px' }} onClick={() => handleEdit(value)}>Edit</button>
+                <button onClick={() => handleDelete(value._id)}>Delete</button>
+              </td>
+            </tr>
           ))}
-        </table>
-      </div>
-      <div>
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-          Previous
-        </button>
+        </tbody>
+      </table>
+
+      <div className="pagination">
+        <button disabled={page === 1} onClick={() => setPage(page - 1)}>Previous</button>
         Page {page} of {totalPages}
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </button>
+        <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button>
       </div>
     </div>
   );

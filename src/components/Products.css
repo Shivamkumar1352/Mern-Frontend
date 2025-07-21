@@ -1,0 +1,137 @@
+.prod-page {
+  display: flex;
+  flex-direction: column;
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.prod-title h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.prod-form-container form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.prod-form-input {
+  flex: 1 1 45%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.prod-form-btn {
+  padding: 10px 16px;
+  border: none;
+  background-color: rgb(235, 107, 57);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.prod-form-btn:hover {
+  background-color: rgb(255, 72, 0);
+}
+
+.prod-search-bar {
+  margin-bottom: 10px;
+}
+
+.prod-search-input {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 240px;
+}
+
+.prod-search-btn {
+  cursor: pointer;
+  padding: 8px 12px;
+  background-color: rgb(235, 107, 57);
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+}
+
+.prod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+.prod-table th,
+.prod-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.prod-table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.prod-table td {
+  vertical-align: top;
+}
+
+.prod-text-cell {
+  max-height: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.prod-text-cell.expanded {
+  max-height: none;
+}
+
+.prod-read-more {
+  background: none;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+.prod-action-btn {
+  margin-right: 10px;
+  padding: 8px 12px;
+  background-color: rgb(235, 107, 57);
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+}
+
+.prod-pagination {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prod-error {
+  color: red;
+  margin: 10px 0;
+}

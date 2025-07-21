@@ -1,7 +1,7 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import "./Products.css";
 import axios from "axios";
+
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState();
@@ -13,11 +13,13 @@ export default function Products() {
     imgUrl: "",
   });
   const [page, setPage] = useState(1);
+  const [expandedRows, setExpandedRows] = useState([]);
   const [searchVal, setSearchVal] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState(2);
   const [editId, setEditId] = useState();
   const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchProducts = async () => {
     try {
       setError("Loading...");
@@ -31,15 +33,16 @@ export default function Products() {
       setError("Something went wrong");
     }
   };
+
   useEffect(() => {
     fetchProducts();
   }, [page]);
+
   const handleDelete = async (id) => {
     try {
-      const url = `${API_URL}/api/products/${id}`;
-      const result = await axios.delete(url);
-      setError("User Deleted Successfully");
-      fetchUsers();
+      await axios.delete(`${API_URL}/api/products/${id}`);
+      setError("Product Deleted Successfully");
+      fetchProducts();
     } catch (err) {
       console.log(err);
       setError("Something went wrong");
@@ -58,9 +61,8 @@ export default function Products() {
       return;
     }
     try {
-      const url = `${API_URL}/api/products`;
-      const result = await axios.post(url, form);
-      setError("User added succesfully");
+      await axios.post(`${API_URL}/api/products`, form);
+      setError("Product added successfully");
       fetchProducts();
       resetForm();
     } catch (err) {
@@ -71,13 +73,7 @@ export default function Products() {
 
   const handleEdit = (product) => {
     setEditId(product._id);
-    setForm({
-      ...form,
-      productName: product.productName,
-      description: product.description,
-      price: product.price,
-      imgUrl: product.imgUrl,
-    });
+    setForm(product);
   };
 
   const handleUpdate = async (e) => {
@@ -88,12 +84,11 @@ export default function Products() {
       return;
     }
     try {
-      const url = `${API_URL}/api/products/${editId}`;
-      const result = await axios.patch(url, form);
+      await axios.patch(`${API_URL}/api/products/${editId}`, form);
+      setError("Product updated successfully");
       fetchProducts();
       setEditId();
       resetForm();
-      setError("User information updated successfully");
     } catch (err) {
       console.log(err);
       setError("Something went wrong");
@@ -107,20 +102,29 @@ export default function Products() {
 
   const resetForm = () => {
     setForm({
-      ...form,
       productName: "",
       description: "",
       price: "",
       imgUrl: "",
     });
   };
+
+  const toggleReadMore = (id) => {
+    setExpandedRows((prev) =>
+      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
+    );
+  };
+
   return (
-    <div>
-      <h2>Product Management</h2>
-      {error}
-      <div>
+    <div className="prod-page">
+      <div className="prod-title">
+        <h2>Product Management</h2>
+      </div>
+
+      <div className="prod-form-container">
         <form ref={frmRef}>
           <input
+            className="prod-form-input"
             name="productName"
             value={form.productName}
             type="text"
@@ -129,6 +133,7 @@ export default function Products() {
             required
           />
           <input
+            className="prod-form-input"
             name="description"
             value={form.description}
             type="text"
@@ -137,6 +142,7 @@ export default function Products() {
             required
           />
           <input
+            className="prod-form-input"
             name="price"
             value={form.price}
             type="text"
@@ -145,67 +151,84 @@ export default function Products() {
             required
           />
           <input
+            className="prod-form-input"
             name="imgUrl"
             value={form.imgUrl}
             type="text"
-            placeholder="Image Url"
+            placeholder="Image URL"
             onChange={handleChange}
             required
           />
-
-
           {editId ? (
             <>
-              <button onClick={handleUpdate}>Update</button>
-              <button onClick={handleCancel}>Cancel</button>
+              <button className="prod-form-btn" onClick={handleUpdate}>Update</button>
+              <button className="prod-form-btn" onClick={handleCancel}>Cancel</button>
             </>
           ) : (
-            <button onClick={handleAdd}>Add</button>
+            <button className="prod-form-btn" onClick={handleAdd}>Add</button>
           )}
         </form>
       </div>
-      <div>
-        <input type="text" onChange={(e) => setSearchVal(e.target.value)} />
-        <button onClick={fetchProducts}>Search</button>
+
+      <div className="prod-search-bar">
+        <input
+          className="prod-search-input"
+          type="text"
+          placeholder="Search by name..."
+          value={searchVal}
+          onChange={(e) => setSearchVal(e.target.value)}
+        />
+        <button className="prod-search-btn" onClick={fetchProducts}>Search</button>
       </div>
-      <div>
-        <table border="1">
+
+      {error && <div className="prod-error">{error}</div>}
+
+      <div className="prod-table-container">
+        <table className="prod-table">
           <thead>
             <tr>
               <th>Product Name</th>
               <th>Description</th>
               <th>Price</th>
-              <th>Image Url</th>
+              <th>Image URL</th>
               <th>Action</th>
             </tr>
           </thead>
-          {products.map((value) => (
-            <tbody key={value._id}>
-              <tr>
+          <tbody>
+            {products.map((value) => (
+              <tr key={value._id}>
                 <td>{value.productName}</td>
-                <td>{value.description}</td>
+                <td>
+                  <div className={`prod-text-cell ${expandedRows.includes(value._id) ? "expanded" : ""}`}>
+                    {value.description}
+                  </div>
+                  {value.description.length > 50 && (
+                    <button
+                      className="prod-read-more"
+                      onClick={() => toggleReadMore(value._id)}
+                    >
+                      {expandedRows.includes(value._id) ? "Read less" : "Read more"}
+                    </button>
+                  )}
+                </td>
                 <td>{value.price}</td>
                 <td>{value.imgUrl}</td>
                 <td>
-                  <button onClick={() => handleEdit(value)}>Edit</button>
-                  <button onClick={() => handleDelete(value._id)}>
-                    Delete
-                  </button>
+                  <button className="prod-action-btn" onClick={() => handleEdit(value)}>Edit</button>
+                  <button className="prod-action-btn" onClick={() => handleDelete(value._id)}>Delete</button>
                 </td>
               </tr>
-            </tbody>
-          ))}
+            ))}
+          </tbody>
         </table>
       </div>
-      <div>
+
+      <div className="prod-pagination">
         <button disabled={page === 1} onClick={() => setPage(page - 1)}>
           Previous
         </button>
         Page {page} of {totalPages}
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
-        >
+        <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
           Next
         </button>
       </div>

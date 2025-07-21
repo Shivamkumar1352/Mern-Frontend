@@ -1,48 +1,61 @@
-import React, { useContext } from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { AppContext } from "../App";
+import "./Login.css";
+
 export default function Login() {
-  const {user, setUser} = useContext(AppContext);
+  const { setUser } = useContext(AppContext);
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState();
   const Navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
-  const handleSubmit = async () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const url = `${API_URL}/api/users/login`;
-      const result = await axios.post(url, user);
+      const result = await axios.post(`${API_URL}/api/users/login`, loginData);
       setUser(result.data);
       Navigate("/");
     } catch (err) {
       console.log(err);
-      setError("Something went wrong");
+      setError(err.response?.data?.message || "Something went wrong");
     }
   };
+
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
-      {error}
-      <p>
-        <input
-          type="text"
-          placeholder="Email Address"
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
-        />
-      </p>
-      <p>
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
-        />
-      </p>
-      <p>
-        <button onClick={handleSubmit}>Submit</button>
-      </p>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <form className="login-form" onSubmit={handleSubmit}>
+        <p>
+          <input
+            type="text"
+            placeholder="Email Address"
+            onChange={(e) =>
+              setLoginData({ ...loginData, email: e.target.value })
+            }
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(e) =>
+              setLoginData({ ...loginData, password: e.target.value })
+            }
+            required
+          />
+        </p>
+        <p>
+          <button type="submit">Submit</button>
+        </p>
+      </form>
       <hr />
-      <Link to="/register">Create Account</Link>
+      <p style={{ textAlign: "center" }}>
+        <Link to="/register">Create Account</Link>
+      </p>
     </div>
   );
 }

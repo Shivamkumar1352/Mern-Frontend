@@ -1,0 +1,131 @@
+/* Container */
+.user-management {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Heading */
+.user-management h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Error message */
+.user-management .error {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Form styling */
+.user-management form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.user-management input,
+.user-management select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex: 1 1 200px;
+}
+
+.user-management button {
+  padding: 10px 15px;
+  background-color: rgb(235, 107, 57);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-management button:hover {
+  background-color: rgb(255, 72, 0);
+}
+
+.user-management .cancel-btn {
+  background-color: #999;
+}
+
+.user-management .cancel-btn:hover {
+  background-color: #777;
+}
+
+/* Search box */
+.user-management .search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.user-management .search-bar input {
+  padding: 8px;
+  flex: 1;
+}
+
+/* Table styling */
+.user-management table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.user-management th,
+.user-management td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.user-management th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Pagination controls */
+.user-management .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.user-management .pagination button {
+  background-color: rgb(235, 107, 57);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.user-management .pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .user-management form {
+    flex-direction: column;
+  }
+
+  .user-management .search-bar {
+    flex-direction: column;
+  }
+
+  .user-management th,
+  .user-management td {
+    font-size: 14px;
+  }
+}

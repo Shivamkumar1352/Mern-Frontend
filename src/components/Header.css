@@ -1,0 +1,56 @@
+/* Header container */
+header {
+  background-color: rgb(235, 107, 57);
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Flex container for logo and nav */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Logo styling */
+.logo {
+  margin: 0;
+  color: black;
+  font-size: 1.8rem;
+}
+
+/* Nav links styling */
+.nav-links {
+    font-size: 1.2rem;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #f0e68c;
+  text-decoration: underline;
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .nav-links {
+    justify-content: flex-start;
+  }
+}

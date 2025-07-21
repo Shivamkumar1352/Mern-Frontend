@@ -1,9 +1,10 @@
 /* App container */
 .App-Container {
   font-family: Arial, sans-serif;
-  max-width: 960px;
-  margin: 0 auto;
+  margin: 0;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Header */
