@@ -57,24 +57,76 @@ export default function Cart() {
         return;
       }
 
-      const url = `${API_URL}/api/orders`;
-      const newOrder = {
-        userId: user._id,
+    //   const url = `${API_URL}/api/orders`;
+    //   const newOrder = {
+    //     userId: user._id,
+    //     email: user.email,
+    //     orderValue,
+    //     items: cart,
+    //   };
+
+    //   await axios.post(url, newOrder);
+
+    //   setCart([]);
+    //   toast.success("Order placed successfully! ✅");
+    //   Navigate("/order");
+    // } catch (err) {
+    //   console.log(err);
+    //   setError("Something went wrong");
+    //   toast.error("Failed to place order ❌");
+    // }
+    const { data: order } = await axios.post(`${API_URL}/api/payment/create-order`, {
+      amount: orderValue,
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`
+    });
+
+    // 2. Load Razorpay script
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY, // frontend key
+      amount: order.amount,
+      currency: order.currency,
+      name: "My Shop",
+      description: "Test Transaction",
+      order_id: order.id,
+      handler: async function (response) {
+        // Verify signature with backend
+        const verifyUrl = `${API_URL}/api/payment/verify-payment`;
+        const { data } = await axios.post(verifyUrl, response);
+
+        if (data.success) {
+          // Save final order in DB
+          await axios.post(`${API_URL}/api/orders`, {
+            userId: user._id,
+            email: user.email,
+            orderValue,
+            items: cart,
+            status: "Pending",
+            paymentId: response.razorpay_payment_id,
+          });
+
+          setCart([]);
+          toast.success("Payment successful! ✅ Order placed.");
+          Navigate("/order");
+        } else {
+          toast.error("Payment verification failed ❌");
+        }
+      },
+      prefill: {
+        name: user.name,
         email: user.email,
-        orderValue,
-        items: cart,
-      };
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
 
-      await axios.post(url, newOrder);
-
-      setCart([]);
-      toast.success("Order placed successfully! ✅");
-      Navigate("/order");
-    } catch (err) {
-      console.log(err);
-      setError("Something went wrong");
-      toast.error("Failed to place order ❌");
-    }
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (err) {
+    console.error(err);
+    toast.error("Payment failed ❌");
+  }
   };
 
   return (
