@@ -1,6 +1,6 @@
 import { useState, createContext } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/Register";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
@@ -38,6 +38,7 @@ function App() {
             </Route>
           </Routes>
           <Footer />
+          <ToastContainer position="top-center" autoClose={3000} />
         </BrowserRouter>
       </AppContext.Provider>
     </div>

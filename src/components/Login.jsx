@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../App";
+import { toast } from "react-toastify";
 import "./Login.css";
 
 export default function Login() {
@@ -16,10 +17,13 @@ export default function Login() {
     try {
       const result = await axios.post(`${API_URL}/api/users/login`, loginData);
       setUser(result.data);
+      toast.success("Login successful! 🎉");
       Navigate("/");
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.message || "Something went wrong");
+      toast.error("Invalid credentials. Try again!");
+
     }
   };
 

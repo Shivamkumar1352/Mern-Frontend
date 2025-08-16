@@ -66,7 +66,7 @@
 
 .qty-controls button {
   padding: 5px 10px;
-  font-size: 1rem;
+  font-size: 5rem;
   background-color: #eb6b39;
   color: white;
   border: none;
@@ -98,6 +98,14 @@
   cursor: pointer;
 }
 
+.empty-cart{
+  font-size: 100px;
+  font-weight:5000;
+  font-family:'Varela Round';
+  color: #666;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+}
 .cart-container button:hover {
   background-color: rgb(235, 107, 57);
 }

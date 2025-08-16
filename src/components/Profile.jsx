@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./Profile.css"; // Import the CSS file
 
 export default function Profile() {
@@ -29,6 +30,7 @@ export default function Profile() {
 
   const logout = () => {
     setUser({});
+    toast.success("logged out successfully")
     navigate("/");
   };
 
@@ -42,8 +44,10 @@ export default function Profile() {
       await axios.patch(url, form);
       fetchProfile();
       setError("Data saved successfully.");
+      toast.success("Profile updated successfully")
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong");
       setError("Something went wrong");
     }
   };
@@ -51,8 +55,6 @@ export default function Profile() {
   return (
     <div className="profile-container">
       <h3 className="profile-heading">My Profile</h3>
-
-      {error && <div className="profile-error">{error}</div>}
 
       <button className="profile-button profile-logout-btn" onClick={logout}>
         Logout
